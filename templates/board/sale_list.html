@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load board_filter %}
+{% block content %}
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="table-dark">
+            <th class="text-center" style="width:15%">Number</th>
+            <th class="text-center" style="width:30%">Product</th>
+            <th class="text-center" style="width:10%">Status</th>
+            <th class="text-center" style="width:25%">Seller</th>
+            <th class="text-center" style="width:20%">Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if sale_list %}
+        {% for sale in sale_list %}
+        <tr class="text-center">
+            <td>{{ sale_list.paginator.count|sub:sale_list.start_index|sub:forloop.counter0|add:1 }}</td>
+            <td class="text-center">
+                <a href="{% url 'board:detail' sale.id %}">{{ sale.product }}</a>
+                {% if sale.bid_set.count > 0 %}
+                <span class="text-danger small mx-2">{{ sale.bid_set.count }}</span>
+                {% endif %}
+            </td>
+            {% if sale.sold %}
+                <td><div class="badge bg-warning">Sold Out</div></td>
+            {% else %}
+                <td><div class="badge bg-primary">For Sale</div></td>
+            {% endif %}
+            <td>{{ sale.seller.username }}</td>
+            <td>{{ sale.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="5">No Goods on Sale</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <!-- Paging Start -->
+    <ul class="pagination justify-content-center">
+        <!-- Prev -->
+        {% if sale_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ sale_list.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Previous</a>
+        </li>
+        {% endif %}
+        <!-- Pagelist -->
+        {% for page_number in sale_list.paginator.page_range %}
+        {% if page_number >= sale_list.number|add:-5 and page_number <= sale_list.number|add:5 %}
+        {% if page_number == sale_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- next_page -->
+        {% if sale_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ sale_list.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Next</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- Paging Ends -->
+    <a href="{% url 'board:sale_create' %}" class="btn btn-primary">Upload your Goods for Sale</a>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h5 class="my-3 border-bottom pb-2">Upload your Goods for Sale</h5>
+    <form method="post">
+        {% csrf_token %}
+        <!-- 오류표시 Start -->
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            {% for field in form %}
+            {% if field.errors %}
+            <div>
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+        <!-- 오류표시 End -->
+        <div class="mb-3">
+            <label for="product" class="form-label">Product Name</label>
+            <input type="text" class="form-control" name="product" id="product"
+                   value="{{ form.product.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" min="0" max="3000000" class="form-control" name="price"
+                      id="price" value="{{ form.price.value|default_if_none:'' }}">
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description"
+                      id="description" rows="10">{{ form.description.value|default_if_none:'' }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+</div>
+{% endblock %}
