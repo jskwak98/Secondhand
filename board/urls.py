@@ -10,7 +10,7 @@ router.register(r'sale_api', SaleViewSet)
 router.register(r'bid_api', BidViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('', views.index, name='index'),
     path('<int:sale_id>/', views.detail, name='detail'),
     path('bid/create/<int:sale_id>/', views.bid_create, name='bid_create'),
