@@ -1,7 +1,16 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from common.forms import UserForm
+from rest_framework import viewsets
+from .serializers import UserSerializer
+from .models import User
+from django_filters.rest_framework import DjangoFilterBackend
 
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    #filter_backends = [DjangoFilterBackend]
+    #filter_backends = ['broker_id']
 
 def signup(request):
     if request.method == "POST":

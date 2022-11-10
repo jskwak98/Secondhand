@@ -1,10 +1,16 @@
-from django.urls import path
-
+from django.urls import path, include
 from . import views
+from rest_framework import routers
+from .views import SaleViewSet, BidViewSet
 
 app_name = 'board'
 
+router = routers.DefaultRouter()
+router.register(r'sale_api', SaleViewSet)
+router.register(r'bid_api', BidViewSet)
+
 urlpatterns = [
+    path('', include(router.urls)),
     path('', views.index, name='index'),
     path('<int:sale_id>/', views.detail, name='detail'),
     path('bid/create/<int:sale_id>/', views.bid_create, name='bid_create'),

@@ -5,6 +5,22 @@ from .forms import SaleForm, BidForm
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from rest_framework import viewsets
+from .serializers import SaleSerializer, BidSerializer
+from django_filters.rest_framework import DjangoFilterBackend
+
+class SaleViewSet(viewsets.ModelViewSet):
+    queryset = Sale.objects.all()
+    serializer_class = SaleSerializer
+    #filter_backends = [DjangoFilterBackend]
+    #filterset_fields = ['id']
+
+
+class BidViewSet(viewsets.ModelViewSet):
+    queryset = Bid.objects.all()
+    serializer_class = BidSerializer
+    #filter_backends = [DjangoFilterBackend]
+    #filterset_fields = ['buyer_id', 'agreed']
 
 
 def index(request):

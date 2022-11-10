@@ -31,6 +31,8 @@ ALLOWED_HOSTS = ['3.36.207.92']
 # Application definition
 
 INSTALLED_APPS = [
+    "django_filters",
+    "rest_framework",
     "common.apps.CommonConfig",
     "board.apps.BoardConfig",
     "django.contrib.admin",
@@ -128,3 +130,12 @@ LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'common.User'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
