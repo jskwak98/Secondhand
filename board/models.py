@@ -21,6 +21,6 @@ class Bid(models.Model):
     buyer = models.ForeignKey(User, on_delete=models.CASCADE)
     sale = models.ForeignKey(Sale, on_delete=models.CASCADE)
     content = models.TextField()
-    agreed = models.BooleanField(default=False)
+    agreed = models.IntegerField(default=0)
     create_date = models.DateTimeField()
     modify_date = models.DateTimeField(null=True, blank=True)
