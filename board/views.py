@@ -12,15 +12,16 @@ from django_filters.rest_framework import DjangoFilterBackend
 class SaleViewSet(viewsets.ModelViewSet):
     queryset = Sale.objects.all()
     serializer_class = SaleSerializer
-    #filter_backends = [DjangoFilterBackend]
-    #filterset_fields = ['id']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['id']
+
 
 
 class BidViewSet(viewsets.ModelViewSet):
     queryset = Bid.objects.all()
     serializer_class = BidSerializer
-    #filter_backends = [DjangoFilterBackend]
-    #filterset_fields = ['buyer_id', 'agreed']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['buyer_id', 'agreed']
 
 
 def index(request):
