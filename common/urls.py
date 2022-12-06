@@ -2,12 +2,12 @@ from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 from rest_framework import routers
-from .views import UserViewSet
+from .views import UserViewSet, IDList
 
 app_name = 'common'
 
 router = routers.DefaultRouter()
-router.register(r'user', UserViewSet)
+router.register(r'user', IDList.as_view())
 
 urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='common/login.html'), name='login'),
