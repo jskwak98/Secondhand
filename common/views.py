@@ -14,14 +14,9 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class IDList(generics.ListAPIView):
     serializer_class = UserSerializer
-
-    def get_queryset(self):
-        queryset = User.objects.all()
-        username = self.request.query_params.get('username')
-        b_id = self.request.query_params.get('b_id')
-        if username is not None and b_id is not None:
-            queryset = queryset.filter(username=username, broker_id=b_id)
-        return queryset
+    queryset = User.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['username', 'broker_id']
 
 def signup(request):
     if request.method == "POST":
